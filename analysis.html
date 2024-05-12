@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+        .match-details {
+            max-width: 400px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-right: 20px;
+        }
+        .match-details h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .match-details p {
+            margin: 0 0 10px;
+            color: #666;
+        }
+        .playing-conditions {
+            flex-grow: 1;
+        }
+        .analysis-label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Match Analysis</h2>
+    <div class="container">
+        <div class="match-details" id="matchDetails">
+            <h3>Match Details</h3>
+        </div>
+        <div class="match-details playing-conditions" id="playingConditions">
+            <h3>Playing Conditions</h3>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var matchId = getParameterByName("id");
+            var matches = JSON.parse(localStorage.getItem("matches")) || [];
+            var match = matches.find(function(match) {
+                return match.id == matchId;
+            });
+
+            if (match) {
+                var matchDetailsDiv = document.getElementById("matchDetails");
+                matchDetailsDiv.innerHTML += `
+                    <p><span class="analysis-label">Match ID:</span> ${match.id}</p>
+                    <p><span class="analysis-label">Team 1:</span> ${match.team1}</p>
+                    <p><span class="analysis-label">Team 2:</span> ${match.team2}</p>
+                    <p><span class="analysis-label">Venue:</span> ${match.venue}</p>
+                    <p><span class="analysis-label">Date:</span> ${match.date}</p>
+                `;
+
+                var playingConditionsDiv = document.getElementById("playingConditions");
+                playingConditionsDiv.innerHTML += `
+                    <p><span class="analysis-label">Pitch Type:</span> ${match.playing_conditions.pitch_type}</p>
+                    <p><span class="analysis-label">Grass Level:</span> ${match.playing_conditions.grass_level}</p>
+                    <p><span class="analysis-label">Moisture Content:</span> ${match.playing_conditions.moisture_content}</p>
+                    <p><span class="analysis-label">Favourable for:</span> ${match.playing_conditions.favourable_for}</p>
+                `;
+            } else {
+                alert("Match not found!");
+            }
+        });
+
+        function getParameterByName(name) {
+            var url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+    </script>
+</body>
+</html>

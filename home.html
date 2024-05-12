@@ -80,7 +80,6 @@
                 }
             });
 
-            // Sort completedMatches by date in descending order
             completedMatches.sort(function(a, b) {
                 return new Date(b.date) - new Date(a.date);
             });
@@ -101,7 +100,7 @@
                     <p><strong>Team 2:</strong> ${match.team2}</p>
                     <p><strong>Venue:</strong> ${match.venue}</p>
                     <p><strong>Date:</strong> ${match.date}</p>
-                    <p><strong>Predicted First Innings Score:</strong> ${match.predicted_score}</p>
+                    <button onclick="viewAnalysis(${match.id})">View Full Analysis</button>
                 `;
                 matchesList.appendChild(matchElement);
             });
@@ -115,6 +114,10 @@
         document.addEventListener("DOMContentLoaded", function() {
             loadMatches();
         });
+
+        function viewAnalysis(matchId) {
+            window.location.href = 'analysis.html?id=' + matchId;
+        }
     </script>
 </body>
 </html>
