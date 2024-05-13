@@ -81,6 +81,26 @@
         
         <label for="favourable_for">Favourable for:</label>
         <input type="text" id="favourable_for" name="favourable_for" required>
+
+        <h3>First Innings Insights:</h3>
+        <label for="powerplay">Powerplay:</label>
+        <input type="text" id="powerplay" name="powerplay" required>
+        
+        <label for="middle_phase">Middle Phase:</label>
+        <input type="text" id="middle_phase" name="middle_phase" required>
+        
+        <label for="death_overs">Death Overs:</label>
+        <input type="text" id="death_overs" name="death_overs" required>
+        
+        <label for="par_score">Par Score:</label>
+        <input type="number" id="par_score" name="par_score" required>
+
+        <h3>Predicted First Innings Score:</h3>
+        <label for="team1_score">Team 1 Score:</label>
+        <input type="number" id="team1_score" name="team1_score" required>
+        
+        <label for="team2_score">Team 2 Score:</label>
+        <input type="number" id="team2_score" name="team2_score" required>
         
         <input type="button" value="Update" onclick="updateMatch()">
     </form>
@@ -96,6 +116,12 @@
             var grass_level = document.getElementById("grass_level").value;
             var moisture_content = document.getElementById("moisture_content").value;
             var favourable_for = document.getElementById("favourable_for").value;
+            var powerplay = document.getElementById("powerplay").value;
+            var middle_phase = document.getElementById("middle_phase").value;
+            var death_overs = document.getElementById("death_overs").value;
+            var par_score = document.getElementById("par_score").value;
+            var team1_score = document.getElementById("team1_score").value;
+            var team2_score = document.getElementById("team2_score").value;
 
             var matches = JSON.parse(localStorage.getItem("matches")) || [];
             var matchIndex = matches.findIndex(function(match) {
@@ -114,6 +140,16 @@
                         grass_level: grass_level,
                         moisture_content: moisture_content,
                         favourable_for: favourable_for
+                    },
+                    first_innings_insights: {
+                        powerplay: powerplay,
+                        middle_phase: middle_phase,
+                        death_overs: death_overs,
+                        par_score: par_score
+                    },
+                    predicted_first_innings_score: {
+                        team1_score: team1_score,
+                        team2_score: team2_score
                     }
                 };
 

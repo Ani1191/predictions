@@ -7,31 +7,36 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            background-color: #304352; /* Dark blue background */
             margin: 0;
             padding: 20px;
+            text-align: center;
+            color: #fff; /* White text color */
         }
         h2 {
             text-align: center;
-            color: #333;
+            color: #fff; /* White text color */
         }
         .container {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
         }
-        .match-details {
+        .match-details, .playing-conditions, .first-innings-insights {
+            width: 100%;
             max-width: 400px;
-            background-color: #fff;
+            background-color: #f0f0f0; /* Light gray background for boxes */
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            margin-right: 20px;
+            margin-bottom: 20px;
         }
-        .match-details h3 {
+        .match-details h3, .playing-conditions h3, .first-innings-insights h3 {
             margin-top: 0;
             color: #333;
+            text-align: center;
         }
-        .match-details p {
+        .match-details p, .playing-conditions p, .first-innings-insights p {
             margin: 0 0 10px;
             color: #666;
             display: flex;
@@ -55,8 +60,11 @@
         <div class="match-details" id="matchDetails">
             <h3>Match Details</h3>
         </div>
-        <div class="match-details playing-conditions" id="playingConditions">
+        <div class="playing-conditions" id="playingConditions">
             <h3>Playing Conditions</h3>
+        </div>
+        <div class="first-innings-insights" id="firstInningsInsights">
+            <h3>First Innings Insights</h3>
         </div>
     </div>
 
@@ -84,6 +92,16 @@
                     <p><span class="analysis-label">Grass Level</span><span class="colon">:</span> ${match.playing_conditions.grass_level}</p>
                     <p><span class="analysis-label">Moisture Content</span><span class="colon">:</span> ${match.playing_conditions.moisture_content}</p>
                     <p><span class="analysis-label">Favourable for</span><span class="colon">:</span> ${match.playing_conditions.favourable_for}</p>
+                `;
+
+                var firstInningsInsightsDiv = document.getElementById("firstInningsInsights");
+                firstInningsInsightsDiv.innerHTML += `
+                    <p><span class="analysis-label">Powerplay</span><span class="colon">:</span> ${match.first_innings_insights.powerplay || "To be updated"}</p>
+                    <p><span class="analysis-label">Middle Phase</span><span class="colon">:</span> ${match.first_innings_insights.middle_phase || "To be updated"}</p>
+                    <p><span class="analysis-label">Death Overs</span><span class="colon">:</span> ${match.first_innings_insights.death_overs || "To be updated"}</p>
+                    <p><span class="analysis-label">Par Score</span><span class="colon">:</span> ${match.first_innings_insights.par_score || "To be updated"}</p>
+                    <p><span class="analysis-label">${match.team1}</span><span class="colon">:</span> ${match.predicted_first_innings_score.team1_score || "To be updated"}</p>
+                    <p><span class="analysis-label">${match.team2}</span><span class="colon">:</span> ${match.predicted_first_innings_score.team2_score || "To be updated"}</p>
                 `;
             } else {
                 alert("Match not found!");
