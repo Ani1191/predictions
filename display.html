@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Display Predictions</title>
+    <title>Matches on the Day</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,94 +14,121 @@
         h2 {
             text-align: center;
             color: #333;
+            margin-bottom: 20px;
         }
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
         }
         label {
-            display: block;
-            margin-bottom: 10px;
-            color: #666;
+            font-weight: bold;
+            margin-right: 10px;
+            width: 100px; /* Adjust the width based on the longest label */
+            display: inline-block;
+            text-align: left; /* Left-align the labels */
         }
-        input[type="date"] {
-            width: calc(100% - 20px);
+        input[type="date"],
+        button {
             padding: 10px;
-            margin-bottom: 20px;
+            border-radius: 5px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            margin-bottom: 10px;
+            width: 200px;
+            box-sizing: border-box;
         }
-        input[type="button"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
+        button {
+            background-color: #4CAF50; /* Green */
             border: none;
-            border-radius: 5px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
             cursor: pointer;
+            display: block;
+            margin: 0 auto;
         }
-        input[type="button"]:hover {
+        button:hover {
             background-color: #45a049;
         }
-        #predictions {
-            max-width: 600px;
-            margin: 20px auto;
+        .matches-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .match {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
             background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: calc(25% - 20px); /* 25% minus margins */
+            max-width: calc(25% - 20px); /* 25% minus margins */
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .match p {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
         }
-        li {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 20px;
+        .match p strong {
+            flex: 0 0 auto;
+            width: 100px; /* Adjust the width based on the longest label */
+            text-align: right;
         }
-        li:last-child {
-            border-bottom: none;
+        .match p span {
+            flex: 1;
+            text-align: left;
+            margin-left: 10px;
+        }
+        .match button {
+            margin-top: 10px;
+            display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
-    <h2>Predictions</h2>
-    <form id="dateForm">
-        <label for="selectedDate">Select Date:</label>
-        <input type="date" id="selectedDate" name="selectedDate" required>
-        <input type="button" value="Submit" onclick="displayMatches()">
-    </form>
-    <div id="predictions"></div>
+    <div class="container">
+        <h2>Matches on the Day</h2>
+        <div>
+            <input type="date" id="matchDate" name="matchDate">
+        </div>
+        <div>
+            <button onclick="loadMatches()">Submit Date</button>
+        </div>
+    </div>
+    <div class="matches-container" id="matchesList"></div>
 
     <script>
-        function displayMatches() {
-            var selectedDate = document.getElementById("selectedDate").value;
+        function loadMatches() {
+            var selectedDate = document.getElementById("matchDate").value;
             var matches = JSON.parse(localStorage.getItem("matches")) || [];
-            var matchedPredictions = matches.filter(function(match) {
+            var filteredMatches = matches.filter(function(match) {
                 return match.date === selectedDate;
             });
+            displayMatches(filteredMatches);
+        }
 
-            var predictionsDiv = document.getElementById("predictions");
-            if (matchedPredictions.length === 0) {
-                predictionsDiv.innerHTML = "<p>No predictions found for the selected date.</p>";
-            } else {
-                var html = "<h3>Predictions for " + selectedDate + ":</h3><ul>";
-                matchedPredictions.forEach(function(match) {
-                    html += "<li>";
-                    html += "Team 1: " + match.team1 + "<br>";
-                    html += "Team 2: " + match.team2 + "<br>";
-                    html += "Venue: " + match.venue + "<br>";
-                    html += "Date: " + match.date + "<br>";
-                    html += "</li>";
-                });
-                html += "</ul>";
-                predictionsDiv.innerHTML = html;
-            }
+        function displayMatches(matches) {
+            var matchesContainer = document.getElementById("matchesList");
+            matchesContainer.innerHTML = "";
+            matches.forEach(function(match) {
+                var matchElement = document.createElement("div");
+                matchElement.classList.add("match");
+                matchElement.innerHTML = `
+                    <p><strong>Team1 :</strong> <span>${match.team1}</span></p>
+                    <p><strong>Team2 :</strong> <span>${match.team2}</span></p>
+                    <p><strong>Venue :</strong> <span>${match.venue}</span></p>
+                    <p><strong>Date :</strong> <span>${match.date}</span></p>
+                    <button onclick="viewAnalysis(${match.id})">View Full Analysis</button>
+                `;
+                matchesContainer.appendChild(matchElement);
+            });
+        }
+
+        function viewAnalysis(matchId) {
+            window.location.href = 'analysis.html?id=' + matchId;
         }
     </script>
 </body>

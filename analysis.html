@@ -34,12 +34,18 @@
         .match-details p {
             margin: 0 0 10px;
             color: #666;
-        }
-        .playing-conditions {
-            flex-grow: 1;
+            display: flex;
+            align-items: center;
         }
         .analysis-label {
             font-weight: bold;
+            width: 120px; /* Adjust the width of the labels */
+            flex: 0 0 auto;
+        }
+        .colon {
+            width: 20px; /* Adjust the width of the colon */
+            text-align: center;
+            flex: 0 0 auto;
         }
     </style>
 </head>
@@ -65,19 +71,19 @@
             if (match) {
                 var matchDetailsDiv = document.getElementById("matchDetails");
                 matchDetailsDiv.innerHTML += `
-                    <p><span class="analysis-label">Match ID:</span> ${match.id}</p>
-                    <p><span class="analysis-label">Team 1:</span> ${match.team1}</p>
-                    <p><span class="analysis-label">Team 2:</span> ${match.team2}</p>
-                    <p><span class="analysis-label">Venue:</span> ${match.venue}</p>
-                    <p><span class="analysis-label">Date:</span> ${match.date}</p>
+                    <p><span class="analysis-label">Match ID</span><span class="colon">:</span> ${match.id}</p>
+                    <p><span class="analysis-label">Team 1</span><span class="colon">:</span> ${match.team1}</p>
+                    <p><span class="analysis-label">Team 2</span><span class="colon">:</span> ${match.team2}</p>
+                    <p><span class="analysis-label">Venue</span><span class="colon">:</span> ${match.venue}</p>
+                    <p><span class="analysis-label">Date</span><span class="colon">:</span> ${match.date}</p>
                 `;
 
                 var playingConditionsDiv = document.getElementById("playingConditions");
                 playingConditionsDiv.innerHTML += `
-                    <p><span class="analysis-label">Pitch Type:</span> ${match.playing_conditions.pitch_type}</p>
-                    <p><span class="analysis-label">Grass Level:</span> ${match.playing_conditions.grass_level}</p>
-                    <p><span class="analysis-label">Moisture Content:</span> ${match.playing_conditions.moisture_content}</p>
-                    <p><span class="analysis-label">Favourable for:</span> ${match.playing_conditions.favourable_for}</p>
+                    <p><span class="analysis-label">Pitch Type</span><span class="colon">:</span> ${match.playing_conditions.pitch_type}</p>
+                    <p><span class="analysis-label">Grass Level</span><span class="colon">:</span> ${match.playing_conditions.grass_level}</p>
+                    <p><span class="analysis-label">Moisture Content</span><span class="colon">:</span> ${match.playing_conditions.moisture_content}</p>
+                    <p><span class="analysis-label">Favourable for</span><span class="colon">:</span> ${match.playing_conditions.favourable_for}</p>
                 `;
             } else {
                 alert("Match not found!");

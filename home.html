@@ -14,6 +14,11 @@
         h2 {
             text-align: center;
             color: #333;
+            margin-bottom: 20px;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
         }
         .section {
             margin-bottom: 40px;
@@ -31,35 +36,51 @@
         .match {
             border: 1px solid #ccc;
             border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
             background-color: #fff;
-        }
-        .completed,
-        .upcoming {
-            display: none;
         }
         .link {
             color: blue;
             text-decoration: underline;
             cursor: pointer;
+            display: block;
+            margin-top: 10px;
+        }
+        button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
     <h2>Cricket Match Dashboard</h2>
-    <div class="section">
-        <h3 class="section-title">Live Matches</h3>
-        <ul class="matches live" id="liveMatches"></ul>
-    </div>
-    <div class="section">
-        <h3 class="section-title" onclick="toggleSection('completed')">Completed Matches</h3>
-        <ul class="matches completed" id="completedMatches"></ul>
-        <p class="link" onclick="window.location.href = 'display.html';">View all completed matches</p>
-    </div>
-    <div class="section">
-        <h3 class="section-title" onclick="toggleSection('upcoming')">Upcoming Matches</h3>
-        <ul class="matches upcoming" id="upcomingMatches"></ul>
+    <div class="container">
+        <div class="section">
+            <h3 class="section-title" onclick="toggleSection('completed')">Completed Matches</h3>
+            <ul class="matches completed" id="completedMatches"></ul>
+            <p class="link" onclick="window.location.href = 'display.html';">View all completed matches</p>
+        </div>
+        <div class="section">
+            <h3 class="section-title" style="text-align: center;" onclick="toggleSection('live')">Live Matches</h3>
+            <ul class="matches live" id="liveMatches"></ul>
+        </div>
+        <div class="section">
+            <h3 class="section-title" style="text-align: right;" onclick="toggleSection('upcoming')">Upcoming Matches</h3>
+            <ul class="matches upcoming" id="upcomingMatches"></ul>
+        </div>
     </div>
 
     <script>
